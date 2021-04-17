@@ -1,5 +1,6 @@
-The Nautilus DevOps team is running a voting app on their old infrastructure that they want to migrate to the Kubernetes cluster. They have already prepared the requirements related to the application stack. As per details given below deploy the voting app on the Kubernetes cluster:
-
+The Nautilus DevOps team is running a voting app on their old infrastructure that they want to migrate to the Kubernetes cluster.
+They have already prepared the requirements related to the application stack.
+As per details given below deploy the voting app on the Kubernetes cluster:
 
 Create a namespace which should be named vote.
 
