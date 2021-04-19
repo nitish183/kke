@@ -23,7 +23,7 @@ apiVersion: apps/v1
 metadata:
  name: node-deployment-nautilus
  namespace: node-namespace-nautilus
-  labels:
+ labels:
    app: node
 spec:
  replicas: 2
