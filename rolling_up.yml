@@ -1,0 +1,49 @@
+There is a production deployment planned for next week.
+The Nautilus DevOps team wants to test the deployment update and rollback on Dev environment first so that they can identify the risks in advance. 
+Below you can find more details about the plan they want to execute.
+
+
+Create a namespace xfusion. 
+
+kubectl create namespace xfusion
+
+kubectl create namespace devops
+
+Create a deployment called httpd-deploy under this new namespace,
+It should have one container called httpd, use httpd:2.4.28 image and 4 replicas.
+The deployment should use RollingUpdate strategy with maxSurge=1, and maxUnavailable=2.
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+ name: httpd-deploy
+ namespace: devops
+ labels:
+  app: web
+spec:
+ replicas: 6
+ selector:
+  matchLabels:
+   app: web
+ strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 2
+ template:
+  metadata:
+   labels:
+    app: web
+  spec:
+   containers:
+    - name: httpd
+      image: httpd:2.4.27
+      
+
+Next upgrade the deployment to version httpd:2.4.43 using a rolling update.
+
+kubectl set image deployment.v1.apps/nginx-deployment httpd=httpd:2.4.43 --record=true
+
+Finally, once all pods are updated undo the update and roll back to the previous/original version.
+
+kubectl set image deployment.v1.apps/nginx-deployment httpd=httpd:2.4.27 --record=true
